@@ -1,1 +1,97 @@
-hh
+#region VEXcode Generated Robot Configuration
+from vex import *
+import urandom
+
+# Brain should be defined by default
+brain=Brain()
+
+# Robot configuration code
+fork_motor_group = Motor(Ports.PORT8, GearSetting.RATIO_36_1, False)
+
+
+# wait for rotation sensor to fully initialize
+wait(30, MSEC)
+#endregion VEXcode Generated Robot Configuration
+
+from vex import *
+import urandom
+
+# Brain should be defined by default
+brain=Brain()
+
+# Robot configuration code
+left_drive_smart = Motor(Ports.PORT9, GearSetting.RATIO_36_1, False)
+right_drive_smart = Motor(Ports.PORT20, GearSetting.RATIO_36_1, True)
+drivetrain = DriveTrain(left_drive_smart, right_drive_smart, 319.19, 295, 40, MM, 1.5)
+fork_motor_group = Motor(Ports.PORT8, GearSetting.RATIO_36_1, False)
+
+def when_started1():
+    drivetrain.set_drive_velocity(100, PERCENT)
+    drivetrain.set_turn_velocity(100, PERCENT)
+    fork_motor_group.set_velocity(100, PERCENT)
+    fork_motor_group.spin_for(FORWARD, 1750, DEGREES, wait=False)
+    wait(.25, SECONDS)
+    drivetrain.drive_for(FORWARD, 1300, MM, wait=True)
+    fork_motor_group.spin_for(REVERSE, 600, DEGREES, wait=False)
+    wait(.1, SECONDS)
+    drivetrain.drive_for(REVERSE, 700, MM, wait=True)
+    drivetrain.turn_for(LEFT, 120, DEGREES)
+    drivetrain.drive_for(FORWARD, 400, MM, wait=True)
+    fork_motor_group.spin_for(FORWARD, 650, DEGREES, wait=True)
+    drivetrain.drive_for(REVERSE, 200, MM, wait=True)
+    drivetrain.turn_for(LEFT, 110, DEGREES)
+    drivetrain.drive_for(FORWARD, 800, MM, wait=True)
+    fork_motor_group.spin_for(REVERSE, 500, DEGREES, wait=False)
+    wait(.1, SECONDS)
+    drivetrain.drive_for(REVERSE, 500, MM, wait=True)
+    drivetrain.turn_for(LEFT, 140, DEGREES, wait=True)
+    drivetrain.drive_for(FORWARD, 2500, MM, wait=True)
+    fork_motor_group.spin_for(FORWARD, 550, DEGREES, wait=True)
+    drivetrain.drive_for(REVERSE, 400, MM, wait=True)
+    drivetrain.turn_for(LEFT, 115, DEGREES, wait=True)
+    drivetrain.drive_for(FORWARD, 600, MM, wait=True)
+    fork_motor_group.spin_for(REVERSE, 600, DEGREES, wait=False)
+    wait(.1, SECONDS)
+    drivetrain.drive_for(REVERSE, 400, MM, wait=True)
+    drivetrain.turn_for(LEFT, 78, DEGREES, wait=True)
+    drivetrain.drive_for(FORWARD, 2360, MM, wait=True)
+    fork_motor_group.spin_for(FORWARD, 650, DEGREES, wait=True)
+    drivetrain.drive_for(REVERSE, 300, MM, wait=True)
+    drivetrain.turn_for(LEFT, 135, DEGREES, wait=True)
+    drivetrain.drive_for(FORWARD, 450, MM, wait=True)
+    drivetrain.turn_for(RIGHT, 40, DEGREES, wait=True)
+    drivetrain.drive_for(FORWARD, 2000, MM, wait=True)
+    fork_motor_group.spin_for(REVERSE, 500, DEGREES, wait=False)
+    wait(.1, SECONDS)
+    drivetrain.drive_for(REVERSE, 100, MM, wait=True)
+    drivetrain.turn_for(LEFT, 90, DEGREES, wait=True)
+    drivetrain.drive_for(FORWARD, 2350, MM, wait=True)
+    fork_motor_group.spin_for(FORWARD, 550, DEGREES, wait=True)
+    drivetrain.drive_for(REVERSE, 250, MM, wait=True)
+    drivetrain.turn_for(LEFT, 65, DEGREES, wait=True)
+    drivetrain.drive_for(FORWARD, 500, MM, wait=True)
+    fork_motor_group.spin_for(REVERSE, 400, DEGREES, wait=False)
+    wait(.1, SECONDS)
+    drivetrain.drive_for(REVERSE, 150, MM, wait=True)
+    drivetrain.turn_for(LEFT, 130, DEGREES, wait=True)
+    drivetrain.drive_for(FORWARD, 2500, MM, wait=True)
+    fork_motor_group.spin_for(FORWARD, 450, DEGREES, wait=True)      
+    drivetrain.drive_for(REVERSE, 200, MM, wait=True)
+    drivetrain.turn_for(LEFT, 195, DEGREES, wait=True)
+    drivetrain.drive_for(FORWARD, 900, MM, wait=True)
+    fork_motor_group.spin_for(REVERSE, 400, DEGREES, wait=False)
+    wait(.1, SECONDS)
+    drivetrain.drive_for(FORWARD, 1000, MM, wait=True)
+    fork_motor_group.spin_for(FORWARD, 450, DEGREES, wait=True)
+    drivetrain.drive_for(REVERSE, 600, MM, wait=True)
+    drivetrain.turn_for(LEFT, 85, DEGREES, wait=True)
+    drivetrain.drive_for(FORWARD, 800, MM, wait=True)
+    fork_motor_group.spin_for(REVERSE, 400, DEGREES, wait=False)
+    wait(.1, SECONDS)
+    drivetrain.drive_for(REVERSE, 200, MM, wait=True)
+    drivetrain.turn_for(LEFT, 80, DEGREES, wait=True)
+    drivetrain.drive_for(FORWARD, 800, MM, wait=True)
+    fork_motor_group.spin_for(FORWARD, 450, DEGREES, wait=True)
+    drivetrain.drive_for(REVERSE, 300, MM, wait=True)
+    
+
