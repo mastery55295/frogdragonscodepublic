@@ -1,0 +1,142 @@
+/*----------------------------------------------------------------------------*/
+/*                                                                            */
+/*    Module:       main.cpp                                                  */
+/*    Author:       C:\Users\esstudent                                        */
+/*    Created:      Tue Jan 25 2022                                           */
+/*    Description:  V5 project                                                */
+/*                                                                            */
+/*----------------------------------------------------------------------------*/
+
+// ---- START VEXCODE CONFIGURED DEVICES ----
+// Robot Configuration:
+// [Name]               [Type]        [Port(s)]
+// fr                   motor         1               
+// br                   motor         2               
+// fl                   motor         3               
+// bl                   motor         4               
+// BLift                motor         7               
+// ---- END VEXCODE CONFIGURED DEVICES ----
+
+#include "vex.h"
+
+using namespace vex;
+
+competition Competition;
+motor_group Rside = motor_group(fr, br);
+motor_group Lside = motor_group(fl, bl);
+drivetrain Drivetrain = drivetrain(Lside, Rside, 319.19, 295, 40, mm, 1.5);
+
+void pre_auton(void)
+{
+  Brain.Screen.clearScreen();
+  Brain.Screen.print("preAuton");
+  wait(1, seconds);
+}
+
+
+void autonomous(void)
+{
+// Autonomous Code
+Drivetrain.setDriveVelocity(100,percent);
+Drivetrain.setTurnVelocity(100,percent);
+BLift.setVelocity(100,percent);
+
+BLift.spinFor(forward, 1750,degrees);
+wait(.25,seconds);
+
+Drivetrain.driveFor(forward, 1300,mm);
+BLift.spinFor(reverse, 600,degrees);
+wait(.1, seconds);
+
+Drivetrain.driveFor(reverse,700,mm);
+Drivetrain.turnFor(left,120,degrees);
+Drivetrain.driveFor(forward,400,mm);
+
+BLift.spinFor(forward,650,degrees);
+
+Drivetrain.driveFor(reverse,200,mm);
+Drivetrain.turnFor(left,110,degrees);
+Drivetrain.driveFor(forward,800,mm);
+
+BLift.spinFor(reverse,500,degrees);
+wait(.1,seconds);
+
+Drivetrain.driveFor(reverse,500,mm);
+Drivetrain.turnFor(left,140,degrees);
+Drivetrain.driveFor(forward,2500,mm);
+
+BLift.spinFor(forward,550,degrees);
+
+Drivetrain.driveFor(reverse,400,mm);
+Drivetrain.turnFor(left,115,degrees);
+Drivetrain.driveFor(forward,600,mm);
+
+BLift.spinFor(reverse,600,degrees);
+wait(.1,seconds);
+
+Drivetrain.driveFor(reverse,400,mm);
+Drivetrain.turnFor(left,78,degrees);
+Drivetrain.driveFor(forward,2360,mm);
+
+BLift.spinFor(forward,650,degrees);
+
+Drivetrain.driveFor(reverse,300,mm);
+Drivetrain.turnFor(left,135,degrees);
+Drivetrain.driveFor(forward,450,mm);
+Drivetrain.turnFor(right,40,degrees);
+Drivetrain.driveFor(forward,2000,mm);
+
+BLift.spinFor(reverse,500,degrees);
+wait(.1,seconds);
+
+Drivetrain.driveFor(reverse,100,mm);
+Drivetrain.turnFor(left,90,degrees);
+Drivetrain.driveFor(forward,2350,mm);
+
+BLift.spinFor(forward,550,degrees);
+
+Drivetrain.driveFor(reverse,250,mm);
+Drivetrain.turnFor(left,65,degrees);
+Drivetrain.driveFor(forward,500,mm);
+
+BLift.spinFor(reverse,400,degrees);
+wait(0.1,seconds);
+
+Drivetrain.driveFor(reverse,150,mm);
+Drivetrain.turnFor(left,130,degrees);
+Drivetrain.driveFor(forward,2500,mm);
+
+BLift.spinFor(forward,450,degrees);
+
+Drivetrain.driveFor(reverse,200,mm);
+Drivetrain.turnFor(left,195,degrees);
+Drivetrain.driveFor(forward,900,mm);
+
+BLift.spinFor(reverse,400,degrees);
+wait(.1,seconds);
+
+Drivetrain.driveFor(forward,1000,mm);
+
+BLift.spinFor(forward,450,degrees);
+
+Drivetrain.driveFor(reverse,600,mm);
+Drivetrain.turnFor(left,85,degrees);
+Drivetrain.driveFor(forward,800,mm);
+
+BLift.spinFor(reverse,400,degrees);
+wait(.1,seconds);
+
+Drivetrain.driveFor(reverse,200,mm);
+Drivetrain.turnFor(left,80,degrees);
+Drivetrain.driveFor(forward,800,mm);
+
+BLift.spinFor(forward,450,degrees);
+
+Drivetrain.driveFor(reverse,300,mm);
+}
+
+int main() {
+  // Initializing Robot Configuration. DO NOT REMOVE!
+  vexcodeInit();
+  
+}
