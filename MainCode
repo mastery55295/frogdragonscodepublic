@@ -1,55 +1,3 @@
-#pragma region VEXcode Generated Robot Configuration
-// Make sure all required headers are included.
-#include <stdio.h>
-#include <stdlib.h>
-#include <stdbool.h>
-#include <math.h>
-#include <string.h>
-
-
-#include "vex.h"
-
-using namespace vex;
-
-// Brain should be defined by default
-brain Brain;
-
-
-// START V5 MACROS
-#define waitUntil(condition)                                                   \
-  do {                                                                         \
-    wait(5, msec);                                                             \
-  } while (!(condition))
-
-#define repeat(iterations)                                                     \
-  for (int iterator = 0; iterator < iterations; iterator++)
-// END V5 MACROS
-
-
-// Robot configuration code.
-controller Controller1 = controller(primary);
-motor fRight = motor(PORT1, ratio18_1, false);
-
-motor bRight = motor(PORT2, ratio18_1, false);
-
-motor fLeft = motor(PORT3, ratio18_1, false);
-
-motor bLeft = motor(PORT4, ratio18_1, false);
-
-motor Lift = motor(PORT5, ratio36_1, false);
-
-motor Claw = motor(PORT6, ratio36_1, false);
-
-motor bLift = motor(PORT8, ratio36_1, false);
-
-
-// define variable for remote controller enable/disable
-bool RemoteControlCodeEnabled = true;
-
-
-
-
-#pragma endregion VEXcode Generated Robot Configuration
 
 // ----------------------------------------------------------------------------
 //                                                                            
@@ -63,6 +11,20 @@ bool RemoteControlCodeEnabled = true;
 // Include the V5 Library
 #include "vex.h"
 
+// ---- START VEXCODE CONFIGURED DEVICES ----
+// Robot Configuration:
+// [Name]               [Type]        [Port(s)]
+// Controller1          controller                    
+// fRight               motor         1               
+// bRight               motor         2               
+// fLeft                motor         3               
+// bLeft                motor         4               
+// Lift                 motor         5               
+// Claw                 motor         6               
+// bLift                motor         8               
+// ClawPn               digital_out   A               
+// ---- END VEXCODE CONFIGURED DEVICES ----
+
 // Allows for easier use of the VEX Library
 using namespace vex;
 
@@ -72,6 +34,7 @@ competition Competition;
 motor_group leftDrive = motor_group(bLeft, fLeft); // Defining the Left Drive Motor Group
 motor_group rightDrive = motor_group(bRight, fRight); // Defining the Right Drive Motor Group
 drivetrain Drivetrain = drivetrain(leftDrive, rightDrive, 319.19, 295, 40, mm, 1.5); // Using the Left and Right Drives to define the Drivetrain
+// pneumatics ClawPn = pneumatics(triport::port & A)
 
 
 void pre_auton(void)
@@ -83,27 +46,39 @@ void pre_auton(void)
 
 void autonomous(void)
 {
-  Drivetrain.setDriveVelocity(100, pct);
+  Drivetrain.setDriveVelocity(75, pct);
   Lift.setVelocity(100, pct);
   Claw.setVelocity(100, pct);
 
-  Lift.spinFor(fwd, 20, deg);
+  // Lift.spinFor(fwd, 20, deg);
   
-  Drivetrain.driveFor(fwd, 1400, mm); // Drive forward to Middle Mobile Goal
+  bLift.rotateFor(reverse, 4, sec);
 
-  Lift.spinFor(fwd, 10, deg); // Spin Lift up slightly so that Mobile Goal is pressing against bottom of lift plate
+  Drivetrain.driveFor(reverse, 1200, mm); // Drive forward to Middle Mobile Goal
 
-  Claw.spinFor(fwd, 2, sec); // Close the Claw onto the Mobile Goal
+  Drivetrain.setDriveVelocity(30, pct);
+  
+  Drivetrain.driveFor(reverse, 100, mm);
 
-  Drivetrain.driveFor(reverse, 1000, mm); // Back up so that Mobile Goal is out of the Neutral Zone
+  Drivetrain.setDriveVelocity(75, pct);
 
-  Claw.spinFor(reverse, 0.2, sec); // Open Claw so it can back out from under the Mobile Goal
+ // Lift.spinFor(fwd, 10, deg); // Spin Lift up slightly so that Mobile Goal is pressing against bottom of lift plate
+ // Claw.spinFor(fwd, 1, sec); // Close the Claw onto the Mobile Goal
+  
+  bLift.spinFor(fwd, 2, sec);
+ 
+  
 
-  Drivetrain.driveFor(reverse, 200, mm); // Back out from under the Mobile Goal
+  Drivetrain.driveFor(fwd, 1000, mm); // Back up so that Mobile Goal is out of the Neutral Zone
+  
+  bLift.stop(brakeType::brake);
+  //Claw.spinFor(reverse, 0.2, sec); // Open Claw so it can back out from under the Mobile Goal
 
-  Drivetrain.turnFor(right, 45, deg); // Turn towards the Middle Mobile Goal
+  Drivetrain.driveFor(fwd, 200, mm); // Back out from under the Mobile Goal
 
-  Drivetrain.driveFor(fwd, 1400, mm); // Drive toward the Middle Mobile Goal
+  //Drivetrain.turnFor(right, 45, deg); // Turn towards the Middle Mobile Goal
+
+  //Drivetrain.driveFor(fwd, 1400, mm); // Drive toward the Middle Mobile Goal
 }
 
 void usercontrol(void)
@@ -175,6 +150,7 @@ void usercontrol(void)
     if (Controller1.ButtonR1.pressing()) 
     {
       Claw.spin(vex::directionType::fwd, 100, vex::velocityUnits::pct);  
+  
     }
     else if (Controller1.ButtonR2.pressing()) 
     {
