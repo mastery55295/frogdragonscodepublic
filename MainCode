@@ -68,10 +68,10 @@ bool RemoteControlCodeEnabled = true;
 // Robot Configuration:
 // [Name]               [Type]        [Port(s)]
 // Controller1          controller                    
-// fRight               motor         1   reversed            
-// bRight               motor         2   reversed            
-// fLeft                motor         3               
-// bLeft                motor         4               
+// fRight               motor         1               
+// bRight               motor         2              
+// fLeft                motor         3   reversed            
+// bLeft                motor         4   reversed            
 // Lift                 motor         5               
 // Claw                 motor         6               
 // bLift                motor         8               
