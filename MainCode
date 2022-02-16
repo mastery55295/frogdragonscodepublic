@@ -1,3 +1,56 @@
+#pragma region VEXcode Generated Robot Configuration
+// Make sure all required headers are included.
+#include <stdio.h>
+#include <stdlib.h>
+#include <stdbool.h>
+#include <math.h>
+#include <string.h>
+
+
+#include "vex.h"
+
+using namespace vex;
+
+// Brain should be defined by default
+brain Brain;
+
+
+// START V5 MACROS
+#define waitUntil(condition)                                                   \
+  do {                                                                         \
+    wait(5, msec);                                                             \
+  } while (!(condition))
+
+#define repeat(iterations)                                                     \
+  for (int iterator = 0; iterator < iterations; iterator++)
+// END V5 MACROS
+
+
+// Robot configuration code.
+controller Controller1 = controller(primary);
+motor fRight = motor(PORT1, ratio18_1, true);
+
+motor bRight = motor(PORT2, ratio18_1, true);
+
+motor fLeft = motor(PORT3, ratio18_1, false);
+
+motor bLeft = motor(PORT4, ratio18_1, false);
+
+motor Lift = motor(PORT5, ratio36_1, false);
+
+motor Claw = motor(PORT6, ratio36_1, false);
+
+motor bLift = motor(PORT8, ratio36_1, false);
+
+digital_out ClawPn = digital_out(Brain.ThreeWirePort.A);
+
+// define variable for remote controller enable/disable
+bool RemoteControlCodeEnabled = true;
+
+
+
+
+#pragma endregion VEXcode Generated Robot Configuration
 
 // ----------------------------------------------------------------------------
 //                                                                            
@@ -15,8 +68,8 @@
 // Robot Configuration:
 // [Name]               [Type]        [Port(s)]
 // Controller1          controller                    
-// fRight               motor         1               
-// bRight               motor         2               
+// fRight               motor         1   reversed            
+// bRight               motor         2   reversed            
 // fLeft                motor         3               
 // bLeft                motor         4               
 // Lift                 motor         5               
@@ -179,7 +232,22 @@ void usercontrol(void)
       bLift.stop(vex::brakeType::hold);
     }
     // ---------------------
+    if (Controller1.ButtonA.pressing()) 
+    {
+      ClawPn.set(true);
+    }
+    else if (Controller1.ButtonY.pressing()) 
+    {
+      ClawPn.set(false);
+    }
+    else {
+      
+    } {
+
+    }
+    
     wait(20, msec);
+
   }
 }
 
