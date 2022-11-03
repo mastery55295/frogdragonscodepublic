@@ -1,1 +1,165 @@
+competition Competition;
 
+int Brain_precision = 0, Console_precision = 0, Controller1_precision = 0;
+
+float myVariable;
+
+// "when autonomous" hat block
+int onauton_autonomous_0() {
+  Drivetrain.setDriveVelocity(100.0, percent);
+  Drivetrain.setTurnVelocity(100.0, percent);
+  Drivetrain.driveFor(forward, 75.0, mm, true);
+  wait(0.5, seconds);
+  Color_Roller.spinFor(forward, 100.0, degrees, true);
+  Drivetrain.driveFor(reverse, 111.0, mm, true);
+  Drivetrain.turnFor(left, 145.0, degrees, true);
+  wait(0.2, seconds);
+  Flywheel.setVelocity(100.0, percent);
+  Drivetrain.driveFor(forward, 1200.0, mm, true);
+  Drivetrain.turnFor(left, 165.0, degrees, true);
+  Drivetrain.driveFor(forward, 1250.0, mm, true);
+  Drivetrain.turnFor(right, 230.0, degrees, true);
+  repeat(100) {
+    Vision4.takeSnapshot(Vision4__REDDGOAL);
+    if (!(Vision4.objectCount > 0)) {
+      Drivetrain.turnFor(left, 5.0, degrees, true);
+    }
+    else {
+    }
+    wait(5, msec);
+  }
+  wait(0.2, seconds);
+  Flywheel.spin(reverse);
+  wait(0.6, seconds);
+  Disks.spin(reverse);
+  wait(3.5, seconds);
+  Flywheel.stop();
+  Disks.stop();
+  return 0;
+}
+
+// "when Controller1 ButtonL2 pressed" hat block
+void onevent_Controller1ButtonL2_pressed_0() {
+  Flywheel.spin(reverse);
+}
+
+// "when started" hat block
+int whenStarted1() {
+  Disks.setVelocity(100.0, percent);
+  Disks.setMaxTorque(100.0, percent);
+  Flywheel.setMaxTorque(100.0, percent);
+  Flywheel.setStopping(coast);
+  Color_Roller.setVelocity(60.0, percent);
+  Color_Roller.setMaxTorque(100.0, percent);
+  Expansion.set(false);
+  Brain_precision = -1;
+  Controller1_precision = -1;
+  Controller1.Screen.print(printToController1_numberFormat(), static_cast<float>(Drivetrain.temperature(percent)));
+  Controller1.Screen.newLine();
+  Brain.Screen.print(printToBrain_numberFormat(), static_cast<float>(Brain.Battery.capacity()));
+  Brain.Screen.newLine();
+  Brain.Screen.print(printToBrain_numberFormat(), static_cast<float>(Disks.temperature(percent)));
+  Brain.Screen.newLine();
+  return 0;
+}
+
+// "when Controller1 ButtonX released" hat block
+void onevent_Controller1ButtonX_released_0() {
+  Color_Roller.spin(forward);
+}
+
+// "when Controller1 ButtonB released" hat block
+void onevent_Controller1ButtonB_released_0() {
+  Color_Roller.spin(reverse);
+}
+
+// "when Controller1 ButtonL1 pressed" hat block
+void onevent_Controller1ButtonL1_pressed_0() {
+  Flywheel.stop();
+}
+
+// "when Controller1 ButtonY pressed" hat block
+void onevent_Controller1ButtonY_pressed_0() {
+  Color_Roller.stop();
+}
+
+// "when Controller1 ButtonUp released" hat block
+void onevent_Controller1ButtonUp_released_0() {
+  Expansion.set(true);
+}
+
+// "when driver control" hat block
+int ondriver_drivercontrol_0() {
+  Flywheel.setVelocity(60.0, percent);
+  Drivetrain.setDriveVelocity(95.0, percent);
+  Drivetrain.setTurnVelocity(90.0, percent);
+  Drivetrain.setStopping(coast);
+  while (true) {
+    if (Brain.Timer.time(sec) < 10.0) {
+      Expansion.set(true);
+    }
+  wait(5, msec);
+  }
+  return 0;
+}
+
+// "when Controller1 ButtonDown released" hat block
+void onevent_Controller1ButtonDown_released_0() {
+  Expansion.set(false);
+}
+
+// "when Controller1 ButtonRight released" hat block
+void onevent_Controller1ButtonRight_released_0() {
+  Flywheel.setVelocity(90.0, percent);
+}
+
+// "when Controller1 ButtonA released" hat block
+void onevent_Controller1ButtonA_released_0() {
+  Flywheel.setVelocity(60.0, percent);
+}
+
+void VEXcode_driver_task() {
+  // Start the driver control tasks....
+  vex::task drive0(ondriver_drivercontrol_0);
+  while(Competition.isDriverControl() && Competition.isEnabled()) {this_thread::sleep_for(10);}
+  drive0.stop();
+  return;
+}
+
+void VEXcode_auton_task() {
+  // Start the auton control tasks....
+  vex::task auto0(onauton_autonomous_0);
+  while(Competition.isAutonomous() && Competition.isEnabled()) {this_thread::sleep_for(10);}
+  auto0.stop();
+  return;
+}
+
+
+
+int main() {
+  vex::competition::bStopTasksBetweenModes = false;
+  Competition.autonomous(VEXcode_auton_task);
+  Competition.drivercontrol(VEXcode_driver_task);
+
+  // register event handlers
+  Controller1.ButtonL2.pressed(onevent_Controller1ButtonL2_pressed_0);
+  Controller1.ButtonX.released(onevent_Controller1ButtonX_released_0);
+  Controller1.ButtonB.released(onevent_Controller1ButtonB_released_0);
+  Controller1.ButtonL1.pressed(onevent_Controller1ButtonL1_pressed_0);
+  Controller1.ButtonY.pressed(onevent_Controller1ButtonY_pressed_0);
+  Controller1.ButtonUp.released(onevent_Controller1ButtonUp_released_0);
+  Controller1.ButtonDown.released(onevent_Controller1ButtonDown_released_0);
+  Controller1.ButtonRight.released(onevent_Controller1ButtonRight_released_0);
+  Controller1.ButtonA.released(onevent_Controller1ButtonA_released_0);
+
+  wait(15, msec);
+  // post event registration
+
+  // set default print color to black
+  printf("\033[30m");
+
+  // wait for rotation sensor to fully initialize
+  wait(30, msec);
+
+  whenStarted1();
+}
